@@ -42,6 +42,11 @@ int Runtime::deviceId() const {
     return _device_id;
 }
 
+/**
+ * ----
+ * 返回 runtime 使用的底层 API 指针
+ * 例如 CUDA runtime 会返回 CUDARuntimeAPI 结构体指针
+ */
 const LlaisysRuntimeAPI *Runtime::api() const {
     return _api;
 }
@@ -52,6 +57,7 @@ storage_t Runtime::allocateDeviceStorage(size_t size) {
 
 storage_t Runtime::allocateHostStorage(size_t size) {
     return std::shared_ptr<Storage>(new Storage((std::byte *)_api->malloc_host(size), size, *this, true));
+    // 注意这里强制转换为 std::byte*，因为 malloc_host 返回的是 void*
 }
 
 void Runtime::freeStorage(Storage *storage) {

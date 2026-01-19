@@ -4,7 +4,7 @@
 #include "../llaisys.h"
 
 __C {
-    typedef struct LlaisysTensor *llaisysTensor_t;
+    typedef struct LlaisysTensor *llaisysTensor_t; // tensor definition
 
     __export llaisysTensor_t tensorCreate(
         size_t * shape,

@@ -12,12 +12,14 @@ struct TensorMeta {
     std::vector<ptrdiff_t> strides;
 };
 
-class Tensor {
+class Tensor : public std::enable_shared_from_this<Tensor> {
 private:
     TensorMeta _meta;
     core::storage_t _storage;
     size_t _offset;
     Tensor(TensorMeta meta, core::storage_t storage, size_t offset = 0);
+    // 用于拷贝不连续 tensor 数据的私有函数
+    void _copyStridedOnCPU(Tensor* dst_tensor) const;
 
 public:
     static tensor_t create(
